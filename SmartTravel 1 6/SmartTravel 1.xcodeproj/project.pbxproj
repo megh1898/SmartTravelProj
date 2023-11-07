@@ -29,6 +29,9 @@
 		0023BE422ACF489E00122C37 /* SignUpScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0023BE412ACF489E00122C37 /* SignUpScreen.swift */; };
 		0023BE442ACF493800122C37 /* MainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0023BE432ACF493800122C37 /* MainScreen.swift */; };
 		0023BE462ACF4E8500122C37 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0023BE452ACF4E8500122C37 /* AuthViewModel.swift */; };
+		1E2749DF2AFA510700A9EA59 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2749DE2AFA510700A9EA59 /* Extension.swift */; };
+		1E2749E22AFA547100A9EA59 /* RatingStars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2749E12AFA547100A9EA59 /* RatingStars.swift */; };
+		1E2749E52AFA54A600A9EA59 /* StarRating in Frameworks */ = {isa = PBXBuildFile; productRef = 1E2749E42AFA54A600A9EA59 /* StarRating */; };
 		1E3805EE2AF8E93D0083325A /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3805ED2AF8E93D0083325A /* LocationManager.swift */; };
 		1EC7535E2AFA09E200BA7950 /* FavouritesListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC7535D2AFA09E200BA7950 /* FavouritesListingView.swift */; };
 		1EC753612AFA09F500BA7950 /* OrderListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC753602AFA09F500BA7950 /* OrderListingView.swift */; };
@@ -55,6 +58,8 @@
 		0023BE412ACF489E00122C37 /* SignUpScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpScreen.swift; sourceTree = "<group>"; };
 		0023BE432ACF493800122C37 /* MainScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreen.swift; sourceTree = "<group>"; };
 		0023BE452ACF4E8500122C37 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		1E2749DE2AFA510700A9EA59 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		1E2749E12AFA547100A9EA59 /* RatingStars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingStars.swift; sourceTree = "<group>"; };
 		1E3805ED2AF8E93D0083325A /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		1EC7535D2AFA09E200BA7950 /* FavouritesListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesListingView.swift; sourceTree = "<group>"; };
 		1EC753602AFA09F500BA7950 /* OrderListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListingView.swift; sourceTree = "<group>"; };
@@ -76,6 +81,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0023BE382ACF474B00122C37 /* FirebaseDatabase in Frameworks */,
+				1E2749E52AFA54A600A9EA59 /* StarRating in Frameworks */,
 				0023BE3E2ACF474B00122C37 /* FirebaseFirestore in Frameworks */,
 				0023BE2A2ACF474B00122C37 /* FirebaseAnalyticsSwift in Frameworks */,
 				0023BE262ACF474B00122C37 /* FirebaseAnalytics in Frameworks */,
@@ -134,6 +140,8 @@
 		0023BE212ACF45FC00122C37 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				1E2749E02AFA542D00A9EA59 /* ReviewStars */,
+				1E2749DD2AFA50FD00A9EA59 /* Extension */,
 				1EC753BE2AFA1D5C00BA7950 /* FirebaseManager */,
 				1EC7535C2AFA09C400BA7950 /* SideMenu */,
 				1E3805EC2AF8E9320083325A /* LocationManager */,
@@ -147,6 +155,22 @@
 				DAFB472D2AF34ECD00E7D8E8 /* SplashScreenView.swift */,
 			);
 			path = Screens;
+			sourceTree = "<group>";
+		};
+		1E2749DD2AFA50FD00A9EA59 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				1E2749DE2AFA510700A9EA59 /* Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		1E2749E02AFA542D00A9EA59 /* ReviewStars */ = {
+			isa = PBXGroup;
+			children = (
+				1E2749E12AFA547100A9EA59 /* RatingStars.swift */,
+			);
+			path = ReviewStars;
 			sourceTree = "<group>";
 		};
 		1E3805EC2AF8E9320083325A /* LocationManager */ = {
@@ -257,6 +281,7 @@
 				0023BE392ACF474B00122C37 /* FirebaseDatabaseSwift */,
 				0023BE3B2ACF474B00122C37 /* FirebaseDynamicLinks */,
 				0023BE3D2ACF474B00122C37 /* FirebaseFirestore */,
+				1E2749E42AFA54A600A9EA59 /* StarRating */,
 			);
 			productName = "SmartTravel 1";
 			productReference = 0023BE102ACF45DA00122C37 /* SmartTravel 1.app */;
@@ -288,6 +313,7 @@
 			mainGroup = 0023BE072ACF45DA00122C37;
 			packageReferences = (
 				0023BE242ACF474B00122C37 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				1E2749E32AFA54A600A9EA59 /* XCRemoteSwiftPackageReference "StarRating" */,
 			);
 			productRefGroup = 0023BE112ACF45DA00122C37 /* Products */;
 			projectDirPath = "";
@@ -320,6 +346,7 @@
 				DAFBDCB62ADC8B0300148DDC /* DetailsScreen.swift in Sources */,
 				0023BE142ACF45DA00122C37 /* SmartTravel_1App.swift in Sources */,
 				1EC753B42AFA12FC00BA7950 /* SideMenu.swift in Sources */,
+				1E2749E22AFA547100A9EA59 /* RatingStars.swift in Sources */,
 				1E3805EE2AF8E93D0083325A /* LocationManager.swift in Sources */,
 				1EC753642AFA0A0700BA7950 /* NotificationListingView.swift in Sources */,
 				DA4BF6142AD3120500B0D3CC /* HomeScreen.swift in Sources */,
@@ -331,6 +358,7 @@
 				0023BE442ACF493800122C37 /* MainScreen.swift in Sources */,
 				DAFB472E2AF34ECD00E7D8E8 /* SplashScreenView.swift in Sources */,
 				1EC753B82AFA135A00BA7950 /* HomeVieww.swift in Sources */,
+				1E2749DF2AFA510700A9EA59 /* Extension.swift in Sources */,
 				1EC753682AFA0AE100BA7950 /* SideMenuView.swift in Sources */,
 				0023BE402ACF485900122C37 /* SignInScreen.swift in Sources */,
 				0023BE422ACF489E00122C37 /* SignUpScreen.swift in Sources */,
@@ -554,6 +582,14 @@
 				minimumVersion = 10.16.0;
 			};
 		};
+		1E2749E32AFA54A600A9EA59 /* XCRemoteSwiftPackageReference "StarRating" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dkk/StarRating";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -621,6 +657,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0023BE242ACF474B00122C37 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		1E2749E42AFA54A600A9EA59 /* StarRating */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1E2749E32AFA54A600A9EA59 /* XCRemoteSwiftPackageReference "StarRating" */;
+			productName = StarRating;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

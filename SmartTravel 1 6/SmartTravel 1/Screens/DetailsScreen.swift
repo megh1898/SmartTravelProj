@@ -91,6 +91,25 @@ struct DetailsScreen: View {
                         }
                         .padding(.top)
                     }
+                    Button {
+                        alertTF(title: "Review", message: "Please Write Review", hintText: "Enter Review", primaryTitle: "Submit", secondaryTitle: "Cancel") { text in
+                            
+
+                            
+                        } secondaryAction: {
+                            print("Cancelled")
+                        }
+
+                    } label: {
+                        Text("Tap to Review")
+                            .padding(4)
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                            .foregroundColor(.white)
+                    }
+                    
+
+
                     Spacer()
                 }
                 .padding(8)
@@ -109,6 +128,8 @@ struct DetailsScreen: View {
                             dismissButton: .default(Text("OK"))
                         )
                     }
+
+
 
         }
 //        .navigationBarTitle("Details", displayMode: .inline)
