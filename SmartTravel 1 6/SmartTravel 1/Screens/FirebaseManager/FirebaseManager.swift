@@ -75,5 +75,44 @@ class FirebaseManager {
         }
     }
 
+    func getAllOrders(completion: @escaping ([OrderData]?, Error?) -> Void) {
+        var orders: [OrderData] = []
 
+        let db = Firestore.firestore()
+        let orderCollection = db.collection("order")
+
+        orderCollection.getDocuments { snapshot, error in
+            if let error = error {
+                completion(nil, error)
+                return
+            }
+
+            if let snapshot = snapshot {
+                for document in snapshot.documents {
+                    let data = document.data()
+                    
+                    let filter = data["filter"] as? String
+                    let location = data["location"] as? String
+                    let rating = data["rating"] as? String
+                    let title = data["title"] as? String
+                    let id = document.documentID
+
+                    let order = OrderData(id: id, filter: filter ?? "", location: location ?? "", rating: rating ?? "", title: title ?? "")
+                    orders.append(order)
+                }
+
+                completion(orders, nil)
+            }
+        }
+    }
+
+
+}
+
+struct OrderData: Identifiable {
+    let id: String
+    let filter: String
+    let location: String
+    let rating: String
+    let title: String
 }
