@@ -228,6 +228,61 @@ class FirebaseManager {
         }
     }
     
+    func addReviewToFirestore(description: String, rating: String, location: String, title: String, completion: @escaping (Error?) -> Void) {
+        let db = Firestore.firestore()
+        let reviewsCollection = db.collection("reviews")
+        
+        let reviewData: [String: Any] = [
+            "description": description,
+            "rating": rating,
+            "title": title,
+            "location": location
+        ]
+        
+        reviewsCollection.addDocument(data: reviewData) { error in
+            if let error = error {
+                print(error.localizedDescription)
+                completion(error) // Pass the error to the completion handler
+            } else {
+                completion(nil) // Indicate success with nil error
+            }
+        }
+    }
+    
+    func fetchReviewsByTitleAndLocation(title: String, location: String, completion: @escaping ([ReviewData]?, Error?) -> Void) {
+        var reviews: [ReviewData] = []
+
+        let db = Firestore.firestore()
+        let reviewsCollection = db.collection("reviews")
+
+        reviewsCollection
+            .whereField("title", isEqualTo: title)
+            .whereField("location", isEqualTo: location)
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    completion(nil, error)
+                    return
+                }
+
+                if let snapshot = snapshot {
+                    for document in snapshot.documents {
+                        let data = document.data()
+
+                        guard let description = data["description"] as? String,
+                              let rating = data["rating"] as? String else {
+                            continue
+                        }
+
+                        let id = document.documentID
+                        let review = ReviewData(id: id, location: location, rating: rating, description: description, title: title)
+                        reviews.append(review)
+                    }
+
+                    completion(reviews, nil)
+                }
+            }
+    }
+
 }
 
 struct OrderData: Identifiable {
@@ -235,6 +290,14 @@ struct OrderData: Identifiable {
     let filter: String
     let location: String
     let rating: String
+    let title: String
+}
+
+struct ReviewData: Identifiable {
+    let id: String
+    let location: String
+    let rating: String
+    let description: String
     let title: String
 }
 

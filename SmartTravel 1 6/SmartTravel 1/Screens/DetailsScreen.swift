@@ -9,10 +9,12 @@ import SwiftUI
 
 struct DetailsScreen: View {
     
-    var imageData: ImageData
+    @State var imageData: ImageData
     @State private var showAlert = false
     @State var alertMessage = ""
     @State var text = ""
+    @State private var showReviewSheet = false // Add a state variable to control the sheet presentation
+    @State private var showReviews = false // Add a state variable to control the sheet presentation
 
     
     var body: some View {
@@ -91,29 +93,62 @@ struct DetailsScreen: View {
                         }
                         .padding(.top)
                     }
-                    Button {
-                        alertTF(title: "Review", message: "Please Write Review", hintText: "Enter Review", primaryTitle: "Submit", secondaryTitle: "Cancel") { text in
-                            
-
-                            
-                        } secondaryAction: {
+                    HStack {
+                        Button {
                             print("Cancelled")
+                            showReviewSheet = true // Set the state variable to true to present the sheet
+                            
+                        } label: {
+                            Text("Tap to Review")
+                                .padding(4)
+                                .background(Color.blue)
+                                .cornerRadius(10)
+                                .foregroundColor(.white)
+                        }
+                        
+                        Button {
+                            showReviews = true
+                        } label: {
+                            Text("Check Reviews")
+                                .padding(4)
+                                .background(Color.blue)
+                                .cornerRadius(10)
+                                .foregroundColor(.white)
+
                         }
 
-                    } label: {
-                        Text("Tap to Review")
-                            .padding(4)
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                            .foregroundColor(.white)
                     }
                     
-
-
                     Spacer()
                 }
                 .padding(8)
             }
+//            .sheet(isPresented: $showReviewSheet) {
+//                GiveFeedbackAndReview(rating: 0.5, imageData: $imageData) // Present the GiveFeedbackAndReview view
+//                }
+
+
+            .background(
+                NavigationLink(
+                    destination: GiveFeedbackAndReview(rating: 0.5, imageData: $imageData),
+                    isActive: $showReviewSheet,
+                    label: {
+                        EmptyView()
+                    }
+                )
+            )
+            
+            .background(
+                NavigationLink(
+                    destination: ReviewListingView(imageData: $imageData),
+                    isActive: $showReviews,
+                    label: {
+                        EmptyView()
+                    }
+                )
+            )
+
+
             .onAppear {
                 if imageData.isFavourite {
                     text = "Remove Favourite"
@@ -121,6 +156,7 @@ struct DetailsScreen: View {
                     text = "Add to Favourite"
                 }
             }
+            
             .alert(isPresented: $showAlert) {
                         Alert(
                             title: Text("Message"),
@@ -128,8 +164,7 @@ struct DetailsScreen: View {
                             dismissButton: .default(Text("OK"))
                         )
                     }
-
-
+            
 
         }
 //        .navigationBarTitle("Details", displayMode: .inline)

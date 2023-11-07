@@ -22,9 +22,9 @@ struct SideMenuView: View {
                     .shadow(color: .purple.opacity(0.1), radius: 5, x: 0, y: 3)
                 
                 VStack(alignment: .leading, spacing: 0) {
-                    ProfileImageView()
-                        .frame(height: 140)
-                        .padding(.bottom, 30)
+//                    ProfileImageView()
+//                        .frame(height: 140)
+//                        .padding(.bottom, 30)
                     
                     ForEach(SideMenuRowType.allCases, id: \.self){ row in
                         RowView(isSelected: selectedSideMenuTab == row.rawValue, imageName: row.iconName, title: row.title) {
