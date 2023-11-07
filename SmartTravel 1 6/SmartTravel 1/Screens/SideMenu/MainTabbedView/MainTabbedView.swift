@@ -20,9 +20,9 @@ struct MainTabbedView: View {
                     .tag(0)
                 FavoriteListingView(presentSideMenu: $presentSideMenu)
                     .tag(1)
-                OrderListingView(presentSideMenu: $presentSideMenu)
-                    .tag(2)
                 NotificationListingView(presentSideMenu: $presentSideMenu)
+                    .tag(2)
+                OrderListingView(presentSideMenu: $presentSideMenu)
                     .tag(3)
             }
             

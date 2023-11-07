@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct DetailsScreen: View {
+    
     var imageData: ImageData
+    @State private var showAlert = false
+    @State var alertMessage = ""
 
+    
     var body: some View {
         ScrollView {
             VStack {
@@ -59,14 +63,64 @@ struct DetailsScreen: View {
                     Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac varius nunc, eget posuere urna. Praesent sit amet metus id lorem condimentum viverra ac vel odio.")
                         .font(Font.custom("Montserrat", size: 18))                        .lineSpacing(5)
                     
-                    
-                    
+                    HStack {
+                        Button {
+                            didTappedOrder()
+                        } label: {
+                            Text("Place Order")
+                                .padding(4)
+                                .background(Color.blue)
+                                .cornerRadius(10)
+                                .foregroundColor(.white)
+                            
+                        }
+                        .padding(.top)
+                        
+                        
+                        Button {
+                            didTappedFavourite()
+                        } label: {
+                            Text("Add To Favourite")
+                                .padding(4)
+                                .background(Color.blue)
+                                .cornerRadius(10)
+                                .foregroundColor(.white)
+                            
+                        }
+                        .padding(.top)
+                    }
                     Spacer()
                 }
                 .padding(8)
             }
+            .alert(isPresented: $showAlert) {
+                        Alert(
+                            title: Text("Message"),
+                            message: Text("\(alertMessage)"),
+                            dismissButton: .default(Text("OK"))
+                        )
+                    }
+
         }
 //        .navigationBarTitle("Details", displayMode: .inline)
+    }
+    
+    func didTappedOrder() {
+        FirebaseManager.shared.addOrder(filter: imageData.filter, location: imageData.location, rating: imageData.rating, title: imageData.title) { error in
+            if error == nil {
+                self.alertMessage = "Successfully Order Placed"
+                showAlert = true
+                print("Ordered")
+            } else {
+                self.alertMessage = "Error"
+                showAlert = true
+                print("Error")
+            }
+        }
+    }
+    
+    func didTappedFavourite() {
+        
     }
 }
 

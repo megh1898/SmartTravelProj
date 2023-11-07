@@ -25,6 +25,11 @@ struct ContentView: View {
                         self.showSplashScreen = false // Hide the splash screen and show login screen
                     }
                 }
+                
+                FirebaseManager.shared.fetchImageData { imagesData, error in
+                    print(imagesData)
+                }
+
             }
         }
     }

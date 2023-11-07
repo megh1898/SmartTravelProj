@@ -16,12 +16,10 @@ struct HomeScreen: View {
     @State private var userLocation = "Toronto,ON"
     @State private var selectedFilter: String = "Popular"
     @ObservedObject var locationManager = LocationManager()
-
     
     var body: some View {
         ScrollView {
             VStack {
-
                 HeaderView(userLocation: $userLocation)
                 IntroductionView()
                 
@@ -38,8 +36,16 @@ struct HomeScreen: View {
                 FilterButtons(selectedFilter: $selectedFilter)
                 FilterSection(selectedFilter: $selectedFilter)
             }
+            
             .onReceive(locationManager.$city) { newCity in
                 userLocation = "\(newCity), \(locationManager.country)"
+            }
+            .onAppear {
+                FirebaseManager.shared.fetchImageData { imagesData, error in
+                    sampleImageData = imagesData ?? []
+                    print("ImagesData",imagesData)
+                    print("Error", error)
+                }
             }
             .padding(EdgeInsets(top: 0, leading: 3, bottom: 0, trailing: 3))
         }
@@ -258,7 +264,7 @@ struct FilterItem: View {
 }
       
 struct ImageData: Identifiable {
-    var id = UUID()
+    var id: String = ""
     var imageURL: String
     var title: String
     var location: String
@@ -266,16 +272,18 @@ struct ImageData: Identifiable {
     var filter: String
 }
 
-let sampleImageData: [ImageData] = [
-    ImageData(imageURL: "https://images.pexels.com/photos/836941/pexels-photo-836941.jpeg?auto=compress&cs=tinysrgb&w=800322x301", title: "Henghe", location: "China", rating: "2.8", filter: "Popular"),
-    ImageData(imageURL: "https://images.pexels.com/photos/93049/pexels-photo-93049.jpeg?auto=compress&cs=tinysrgb&w=800382x301", title: "Campo Belo", location: "Brazil", rating: "3.9", filter: "Beach"),
-    ImageData(imageURL: "https://images.pexels.com/photos/803900/pexels-photo-803900.jpeg?auto=compress&cs=tinysrgb&w=800", title: "Buseresere", location: "Tanzania", rating: "3.8", filter: "Popular"),
-    ImageData(imageURL: "https://images.pexels.com/photos/9253/sea-city-landscape-sky.jpg?auto=compress&cs=tinysrgb&w=800", title: "Tío Pujio", location: "Argentina", rating: "4.6", filter: "Mountain"),
-    ImageData(imageURL: "https://images.pexels.com/photos/3408353/pexels-photo-3408353.jpeg?cs=srgb&dl=pexels-tom%C3%A1%C5%A1-mal%C3%ADk-3408353.jpg&fm=jpg", title: "Kyoto", location: "Japan", rating: "5.0", filter: "Beach"),
-    ImageData(imageURL: "https://img.freepik.com/free-photo/asian-woman-wearing-japanese-traditional-kimono-yasaka-pagoda-sannen-zaka-street-kyoto-japan_335224-40.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1697587200&semt=sph", title: "Osaka", location: "Japan", rating: "4.9", filter: "Lake"),
-    ImageData(imageURL: "https://img.freepik.com/premium-photo/fuji-mountain-lake-morning-with-autumn-seasons-leaves-japan_763111-13442.jpg?size=626&ext=jpg&ga=GA1.1.1413502914.1697328000&semt=ais", title: "Fuji", location: "Japan", rating: "4.9", filter: "Beach"),
-    ImageData(imageURL: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/26/97/39/7f/caption.jpg?w=1200&h=-1&s=1&cx=1920&cy=1080&chk=v1_f31158e4bb953d28a308", title: "Tokyo", location: "Japan", rating: "5.0", filter: "Lake")
-]
+var sampleImageData: [ImageData] = []
+
+//var sampleImageData: [ImageData] = [
+//    ImageData(imageURL: "https://images.pexels.com/photos/836941/pexels-photo-836941.jpeg?auto=compress&cs=tinysrgb&w=800322x301", title: "Henghe", location: "China", rating: "2.8", filter: "Popular"),
+//    ImageData(imageURL: "https://images.pexels.com/photos/93049/pexels-photo-93049.jpeg?auto=compress&cs=tinysrgb&w=800382x301", title: "Campo Belo", location: "Brazil", rating: "3.9", filter: "Beach"),
+//    ImageData(imageURL: "https://images.pexels.com/photos/803900/pexels-photo-803900.jpeg?auto=compress&cs=tinysrgb&w=800", title: "Buseresere", location: "Tanzania", rating: "3.8", filter: "Popular"),
+//    ImageData(imageURL: "https://images.pexels.com/photos/9253/sea-city-landscape-sky.jpg?auto=compress&cs=tinysrgb&w=800", title: "Tío Pujio", location: "Argentina", rating: "4.6", filter: "Mountain"),
+//    ImageData(imageURL: "https://images.pexels.com/photos/3408353/pexels-photo-3408353.jpeg?cs=srgb&dl=pexels-tom%C3%A1%C5%A1-mal%C3%ADk-3408353.jpg&fm=jpg", title: "Kyoto", location: "Japan", rating: "5.0", filter: "Beach"),
+//    ImageData(imageURL: "https://img.freepik.com/free-photo/asian-woman-wearing-japanese-traditional-kimono-yasaka-pagoda-sannen-zaka-street-kyoto-japan_335224-40.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1697587200&semt=sph", title: "Osaka", location: "Japan", rating: "4.9", filter: "Lake"),
+//    ImageData(imageURL: "https://img.freepik.com/premium-photo/fuji-mountain-lake-morning-with-autumn-seasons-leaves-japan_763111-13442.jpg?size=626&ext=jpg&ga=GA1.1.1413502914.1697328000&semt=ais", title: "Fuji", location: "Japan", rating: "4.9", filter: "Beach"),
+//    ImageData(imageURL: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/26/97/39/7f/caption.jpg?w=1200&h=-1&s=1&cx=1920&cy=1080&chk=v1_f31158e4bb953d28a308", title: "Tokyo", location: "Japan", rating: "5.0", filter: "Lake")
+//]
 
     struct ImageRectangle: View {
         var imageURL: String
