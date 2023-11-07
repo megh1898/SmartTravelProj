@@ -11,7 +11,8 @@ import SwiftUI
 struct FavoriteListingView: View {
     
     @Binding var presentSideMenu: Bool
-    
+    @State var imageData = [ImageData]()
+
     var body: some View {
         VStack{
             HStack{
@@ -25,9 +26,20 @@ struct FavoriteListingView: View {
                 Spacer()
             }
             
+            Text("Favourites Listing View")
+            
+            ForEach(imageData, id: \.id) { item in
+                let orderData = OrderData(id: item.id, filter: item.filter, location: item.location, rating: item.rating, title: item.title)
+                OrderListingCellView(orderData: orderData)
+            }
+            
+            
             Spacer()
-            Text("Favourite Listing View")
-            Spacer()
+        }
+        .onAppear {
+            FirebaseManager.shared.fetchFavouriteList { imagesData, error in
+                self.imageData = imagesData ?? []
+            }
         }
         .padding(.horizontal, 24)
     }

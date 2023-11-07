@@ -13,7 +13,7 @@ struct NotificationListingView: View {
     
     var body: some View {
         VStack{
-            HStack{
+            HStack {
                 Button{
                     presentSideMenu.toggle()
                 } label: {
@@ -23,13 +23,30 @@ struct NotificationListingView: View {
                 }
                 Spacer()
             }
-            
-            Spacer()
             Text("Notification Listing View")
-            Spacer()
+            NotificationCellView(notificationDescription: "Description")
         }
         .padding(.horizontal, 24)
     }
     
 }
 
+#Preview {
+    NotificationListingView(presentSideMenu: .constant(true))
+}
+
+struct NotificationCellView: View {
+    
+    var notificationDescription: String
+        
+    var body: some View {
+            Text("Description")
+                .multilineTextAlignment(.leading) // Horizontal alignment
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.black.opacity(0.04))
+                .cornerRadius(10)
+        
+        
+    }
+}

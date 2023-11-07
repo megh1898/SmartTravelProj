@@ -120,6 +120,13 @@ struct DetailsScreen: View {
                 self.alertMessage = "Successfully Order Placed"
                 showAlert = true
                 print("Ordered")
+                FirebaseManager.shared.addNotification(description: "You successfully booked an order in \(imageData.title), \(imageData.location)") { error in
+                    if error == nil {
+                        print("Error")
+                    } else {
+                        print("Notification added")
+                    }
+                }
             } else {
                 self.alertMessage = "Error"
                 showAlert = true

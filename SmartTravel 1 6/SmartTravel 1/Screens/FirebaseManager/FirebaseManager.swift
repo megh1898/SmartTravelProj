@@ -181,6 +181,22 @@ class FirebaseManager {
         }
     }
 
+    
+    func addNotification(description: String, completion: @escaping (Error?) -> Void) {
+        let db = Firestore.firestore()
+        let notificationCollection = db.collection("notification")
+
+        let data: [String: Any] = ["description": description]
+
+        notificationCollection.addDocument(data: data) { error in
+            if let error = error {
+                completion(error)
+            } else {
+                completion(nil)
+            }
+        }
+    }
+    
 }
 
 struct OrderData: Identifiable {

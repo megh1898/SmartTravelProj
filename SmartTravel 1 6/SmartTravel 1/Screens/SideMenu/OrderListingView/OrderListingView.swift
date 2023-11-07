@@ -31,8 +31,6 @@ struct OrderListingView: View {
             ForEach(orders, id: \.id) { item in
                 OrderListingCellView(orderData: item)
             }
-            
-            
             Spacer()
         }
         .onAppear {
