@@ -270,6 +270,7 @@ struct ImageData: Identifiable {
     var location: String
     var rating: String
     var filter: String
+    var isFavourite: Bool
 }
 
 var sampleImageData: [ImageData] = []

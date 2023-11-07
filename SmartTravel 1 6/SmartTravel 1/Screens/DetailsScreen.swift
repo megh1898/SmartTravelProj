@@ -12,6 +12,7 @@ struct DetailsScreen: View {
     var imageData: ImageData
     @State private var showAlert = false
     @State var alertMessage = ""
+    @State var text = ""
 
     
     var body: some View {
@@ -80,7 +81,8 @@ struct DetailsScreen: View {
                         Button {
                             didTappedFavourite()
                         } label: {
-                            Text("Add To Favourite")
+                            
+                            Text(text)
                                 .padding(4)
                                 .background(Color.blue)
                                 .cornerRadius(10)
@@ -92,6 +94,13 @@ struct DetailsScreen: View {
                     Spacer()
                 }
                 .padding(8)
+            }
+            .onAppear {
+                if imageData.isFavourite {
+                    text = "Remove Favourite"
+                } else {
+                    text = "Add to Favourite"
+                }
             }
             .alert(isPresented: $showAlert) {
                         Alert(
@@ -120,7 +129,22 @@ struct DetailsScreen: View {
     }
     
     func didTappedFavourite() {
-        
+        FirebaseManager.shared.toggleImageOrderFavourite(imageData: imageData) { error in
+            if error == nil {
+                self.alertMessage = "Favourite List Updated"
+                if text == "Remove Favourite" {
+                    text = "Add to Favourite"
+                } else {
+                    text = "Remove Favourite"
+                }
+                showAlert = true
+                print("Updated")
+            } else {
+                self.alertMessage = "Error"
+                showAlert = true
+                print("Error")
+            }
+        }
     }
 }
 
