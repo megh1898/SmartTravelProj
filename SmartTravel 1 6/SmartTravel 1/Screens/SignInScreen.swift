@@ -11,7 +11,7 @@ struct SignInScreen: View {
 
     var body: some View {
         if authViewModel.isAuthenticated {
-            HomeScreen()
+            MainTabbedView()
         } else {
             NavigationView {
                 VStack {

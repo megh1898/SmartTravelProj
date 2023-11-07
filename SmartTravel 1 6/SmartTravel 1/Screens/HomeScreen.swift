@@ -21,7 +21,7 @@ struct HomeScreen: View {
     var body: some View {
         ScrollView {
             VStack {
-                
+
                 HeaderView(userLocation: $userLocation)
                 IntroductionView()
                 
@@ -48,25 +48,24 @@ struct HomeScreen: View {
         struct HeaderView: View {
             
             @Binding var userLocation: String
-            @State private var showMenu = false
-
+            @State var presentSideMenu = false
+            @State var selectedSideMenuTab = 0
 
             var body: some View {
                 HStack {
                     //                Menu Button
-                    Button(action: {
-                        withAnimation {
-                                           showMenu.toggle()
-                                       }                    }) {
-                        Image("menu")
-                            .resizable()
-                            .frame(width: 35, height: 25)
-                            .padding(.vertical, 3.88)
-                    }   
-                                       .navigationTitle("Main Content")
-                    if showMenu {
-                        SideMenu(isMenuVisible: $showMenu)
-                                }
+//                    Button(action: {
+//                        withAnimation {
+//                            presentSideMenu.toggle()
+//                                       }                    }) {
+//                        Image("menu")
+//                            .resizable()
+//                            .frame(width: 35, height: 25)
+//                            .padding(.vertical, 3.88)
+//                    }   
+//                                       .navigationTitle("Main Content")
+                   
+
                     
                     Spacer()
                     
@@ -109,32 +108,32 @@ struct HomeScreen: View {
                 }
             }
     
-struct SideMenu: View {
-    @Binding var isMenuVisible: Bool
-
-    var body: some View {
-        ZStack {
-            Color.black.opacity(0.5)
-                .edgesIgnoringSafeArea(.all)
-
-            HStack {
-                Text("Menu")
-                    .font(.largeTitle)
-                    .foregroundColor(.white)
-                Spacer()
-            }
-            .padding()
-            .background(Color.blue)
-            .frame(width: 200)
-
-        }
-        .onTapGesture {
-            withAnimation {
-                isMenuVisible.toggle()
-            }
-        }
-    }
-}
+//struct SideMenu: View {
+//    @Binding var isMenuVisible: Bool
+//
+//    var body: some View {
+//        ZStack {
+//            Color.black.opacity(0.5)
+//                .edgesIgnoringSafeArea(.all)
+//
+//            HStack {
+//                Text("Menu")
+//                    .font(.largeTitle)
+//                    .foregroundColor(.white)
+//                Spacer()
+//            }
+//            .padding()
+//            .background(Color.blue)
+//            .frame(width: 200)
+//
+//        }
+//        .onTapGesture {
+//            withAnimation {
+//                isMenuVisible.toggle()
+//            }
+//        }
+//    }
+//}
 
 struct IntroductionView: View {
     var body: some View {

@@ -30,6 +30,13 @@
 		0023BE442ACF493800122C37 /* MainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0023BE432ACF493800122C37 /* MainScreen.swift */; };
 		0023BE462ACF4E8500122C37 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0023BE452ACF4E8500122C37 /* AuthViewModel.swift */; };
 		1E3805EE2AF8E93D0083325A /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3805ED2AF8E93D0083325A /* LocationManager.swift */; };
+		1EC7535E2AFA09E200BA7950 /* FavouritesListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC7535D2AFA09E200BA7950 /* FavouritesListingView.swift */; };
+		1EC753612AFA09F500BA7950 /* OrderListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC753602AFA09F500BA7950 /* OrderListingView.swift */; };
+		1EC753642AFA0A0700BA7950 /* NotificationListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC753632AFA0A0700BA7950 /* NotificationListingView.swift */; };
+		1EC753682AFA0AE100BA7950 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC753672AFA0AE100BA7950 /* SideMenuView.swift */; };
+		1EC753B42AFA12FC00BA7950 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC753B32AFA12FC00BA7950 /* SideMenu.swift */; };
+		1EC753B82AFA135A00BA7950 /* HomeVieww.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC753B72AFA135A00BA7950 /* HomeVieww.swift */; };
+		1EC753BB2AFA13AB00BA7950 /* MainTabbedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC753BA2AFA13AB00BA7950 /* MainTabbedView.swift */; };
 		DA4BF6142AD3120500B0D3CC /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4BF6132AD3120500B0D3CC /* HomeScreen.swift */; };
 		DAFB472E2AF34ECD00E7D8E8 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFB472D2AF34ECD00E7D8E8 /* SplashScreenView.swift */; };
 		DAFBDCB42ADC63A100148DDC /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFBDCB32ADC63A000148DDC /* UserProfile.swift */; };
@@ -48,6 +55,13 @@
 		0023BE432ACF493800122C37 /* MainScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreen.swift; sourceTree = "<group>"; };
 		0023BE452ACF4E8500122C37 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		1E3805ED2AF8E93D0083325A /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		1EC7535D2AFA09E200BA7950 /* FavouritesListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesListingView.swift; sourceTree = "<group>"; };
+		1EC753602AFA09F500BA7950 /* OrderListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListingView.swift; sourceTree = "<group>"; };
+		1EC753632AFA0A0700BA7950 /* NotificationListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListingView.swift; sourceTree = "<group>"; };
+		1EC753672AFA0AE100BA7950 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
+		1EC753B32AFA12FC00BA7950 /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
+		1EC753B72AFA135A00BA7950 /* HomeVieww.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVieww.swift; sourceTree = "<group>"; };
+		1EC753BA2AFA13AB00BA7950 /* MainTabbedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbedView.swift; sourceTree = "<group>"; };
 		DA4BF6132AD3120500B0D3CC /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		DAFB472D2AF34ECD00E7D8E8 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		DAFBDCB32ADC63A000148DDC /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
@@ -118,6 +132,7 @@
 		0023BE212ACF45FC00122C37 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				1EC7535C2AFA09C400BA7950 /* SideMenu */,
 				1E3805EC2AF8E9320083325A /* LocationManager */,
 				0023BE3F2ACF485900122C37 /* SignInScreen.swift */,
 				0023BE412ACF489E00122C37 /* SignUpScreen.swift */,
@@ -137,6 +152,68 @@
 				1E3805ED2AF8E93D0083325A /* LocationManager.swift */,
 			);
 			path = LocationManager;
+			sourceTree = "<group>";
+		};
+		1EC7535C2AFA09C400BA7950 /* SideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				1EC753B92AFA13A200BA7950 /* MainTabbedView */,
+				1EC753B62AFA134E00BA7950 /* HomeVieww */,
+				1EC753662AFA0AD500BA7950 /* SideM */,
+				1EC753652AFA0A1B00BA7950 /* FavouritesListingView */,
+				1EC753622AFA09FA00BA7950 /* NotificationListingView */,
+				1EC7535F2AFA09E700BA7950 /* OrderListingView */,
+			);
+			path = SideMenu;
+			sourceTree = "<group>";
+		};
+		1EC7535F2AFA09E700BA7950 /* OrderListingView */ = {
+			isa = PBXGroup;
+			children = (
+				1EC753602AFA09F500BA7950 /* OrderListingView.swift */,
+			);
+			path = OrderListingView;
+			sourceTree = "<group>";
+		};
+		1EC753622AFA09FA00BA7950 /* NotificationListingView */ = {
+			isa = PBXGroup;
+			children = (
+				1EC753632AFA0A0700BA7950 /* NotificationListingView.swift */,
+			);
+			path = NotificationListingView;
+			sourceTree = "<group>";
+		};
+		1EC753652AFA0A1B00BA7950 /* FavouritesListingView */ = {
+			isa = PBXGroup;
+			children = (
+				1EC7535D2AFA09E200BA7950 /* FavouritesListingView.swift */,
+			);
+			path = FavouritesListingView;
+			sourceTree = "<group>";
+		};
+		1EC753662AFA0AD500BA7950 /* SideM */ = {
+			isa = PBXGroup;
+			children = (
+				1EC753672AFA0AE100BA7950 /* SideMenuView.swift */,
+				1EC753B32AFA12FC00BA7950 /* SideMenu.swift */,
+			);
+			path = SideM;
+			sourceTree = "<group>";
+		};
+		1EC753B62AFA134E00BA7950 /* HomeVieww */ = {
+			isa = PBXGroup;
+			children = (
+				1EC753B72AFA135A00BA7950 /* HomeVieww.swift */,
+			);
+			path = HomeVieww;
+			sourceTree = "<group>";
+		};
+		1EC753B92AFA13A200BA7950 /* MainTabbedView */ = {
+			isa = PBXGroup;
+			children = (
+				1EC753BA2AFA13AB00BA7950 /* MainTabbedView.swift */,
+			);
+			path = MainTabbedView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,14 +308,21 @@
 				0023BE162ACF45DA00122C37 /* ContentView.swift in Sources */,
 				DAFBDCB62ADC8B0300148DDC /* DetailsScreen.swift in Sources */,
 				0023BE142ACF45DA00122C37 /* SmartTravel_1App.swift in Sources */,
+				1EC753B42AFA12FC00BA7950 /* SideMenu.swift in Sources */,
 				1E3805EE2AF8E93D0083325A /* LocationManager.swift in Sources */,
+				1EC753642AFA0A0700BA7950 /* NotificationListingView.swift in Sources */,
 				DA4BF6142AD3120500B0D3CC /* HomeScreen.swift in Sources */,
 				0023BE462ACF4E8500122C37 /* AuthViewModel.swift in Sources */,
+				1EC753612AFA09F500BA7950 /* OrderListingView.swift in Sources */,
 				DAFBDCB42ADC63A100148DDC /* UserProfile.swift in Sources */,
+				1EC7535E2AFA09E200BA7950 /* FavouritesListingView.swift in Sources */,
 				0023BE442ACF493800122C37 /* MainScreen.swift in Sources */,
 				DAFB472E2AF34ECD00E7D8E8 /* SplashScreenView.swift in Sources */,
+				1EC753B82AFA135A00BA7950 /* HomeVieww.swift in Sources */,
+				1EC753682AFA0AE100BA7950 /* SideMenuView.swift in Sources */,
 				0023BE402ACF485900122C37 /* SignInScreen.swift in Sources */,
 				0023BE422ACF489E00122C37 /* SignUpScreen.swift in Sources */,
+				1EC753BB2AFA13AB00BA7950 /* MainTabbedView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
