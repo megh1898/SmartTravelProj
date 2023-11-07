@@ -14,31 +14,33 @@ struct OrderListingView: View {
     @State var orders = [OrderData]()
     
     var body: some View {
-        VStack{
-            HStack{
-                Button{
-                    presentSideMenu.toggle()
-                } label: {
-                    Image("menu")
-                        .resizable()
-                        .frame(width: 32, height: 32)
+        ScrollView {
+            VStack{
+                HStack{
+                    Button{
+                        presentSideMenu.toggle()
+                    } label: {
+                        Image("menu")
+                            .resizable()
+                            .frame(width: 32, height: 32)
+                    }
+                    Spacer()
+                }
+                
+                Text("Order Listing View")
+                
+                ForEach(orders, id: \.id) { item in
+                    OrderListingCellView(orderData: item)
                 }
                 Spacer()
             }
-            
-            Text("Order Listing View")
-            
-            ForEach(orders, id: \.id) { item in
-                OrderListingCellView(orderData: item)
+            .onAppear {
+                FirebaseManager.shared.getAllOrders { orderData, error in
+                    self.orders = orderData ?? []
+                }
             }
-            Spacer()
-        }
-        .onAppear {
-            FirebaseManager.shared.getAllOrders { orderData, error in
-                self.orders = orderData ?? []
-            }
-        }
         .padding(.horizontal, 24)
+        }
     }
     
 }

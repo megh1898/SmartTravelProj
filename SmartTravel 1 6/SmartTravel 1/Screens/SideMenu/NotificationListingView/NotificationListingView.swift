@@ -10,23 +10,36 @@ import SwiftUI
 struct NotificationListingView: View {
     
     @Binding var presentSideMenu: Bool
-    
+    @State var notifications = [NotificationData]()
+
     var body: some View {
-        VStack{
-            HStack {
-                Button{
-                    presentSideMenu.toggle()
-                } label: {
-                    Image("menu")
-                        .resizable()
-                        .frame(width: 32, height: 32)
+        ScrollView {
+            VStack {
+                HStack {
+                    Button{
+                        presentSideMenu.toggle()
+                    } label: {
+                        Image("menu")
+                            .resizable()
+                            .frame(width: 32, height: 32)
+                    }
+                    Spacer()
+                }
+                
+                Text("Notification Listing")
+                
+                ForEach(notifications, id: \.id) { item in
+                    NotificationCellView(notificationDescription: item.description)
                 }
                 Spacer()
             }
-            Text("Notification Listing View")
-            NotificationCellView(notificationDescription: "Description")
-        }
+            .onAppear {
+                FirebaseManager.shared.fetchAllNotifications { notificationsData, error in
+                    notifications = notificationsData ?? []
+                }
+            }
         .padding(.horizontal, 24)
+        }
     }
     
 }
@@ -40,7 +53,7 @@ struct NotificationCellView: View {
     var notificationDescription: String
         
     var body: some View {
-            Text("Description")
+            Text(notificationDescription)
                 .multilineTextAlignment(.leading) // Horizontal alignment
                 .frame(maxWidth: .infinity)
                 .padding()

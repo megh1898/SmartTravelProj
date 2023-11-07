@@ -197,6 +197,37 @@ class FirebaseManager {
         }
     }
     
+    
+    func fetchAllNotifications(completion: @escaping ([NotificationData]?, Error?) -> Void) {
+        var notifications: [NotificationData] = []
+
+        let db = Firestore.firestore()
+        let notificationCollection = db.collection("notification")
+
+        notificationCollection.getDocuments { snapshot, error in
+            if let error = error {
+                completion(nil, error)
+                return
+            }
+
+            if let snapshot = snapshot {
+                for document in snapshot.documents {
+                    let data = document.data()
+                    
+                    guard let description = data["description"] as? String else {
+                        continue
+                    }
+                    
+                    let id = document.documentID
+                    let notification = NotificationData(id: id, description: description)
+                    notifications.append(notification)
+                }
+
+                completion(notifications, nil)
+            }
+        }
+    }
+    
 }
 
 struct OrderData: Identifiable {
@@ -205,4 +236,10 @@ struct OrderData: Identifiable {
     let location: String
     let rating: String
     let title: String
+}
+
+
+struct NotificationData: Identifiable {
+    let id: String
+    let description: String
 }
