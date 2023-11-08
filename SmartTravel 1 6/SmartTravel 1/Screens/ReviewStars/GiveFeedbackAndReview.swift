@@ -51,7 +51,7 @@ struct GiveFeedbackAndReview: View {
                         Text("Submit Review")
                             .font(.title3)
                             .padding()
-                            .background(Color.blue)
+                            .background(Color(red: 0.39, green: 0.56, blue: 0.89))
                             .foregroundColor(.white)
                             .cornerRadius(10)
                     }

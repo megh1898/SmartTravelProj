@@ -49,6 +49,7 @@ struct DetailsScreen: View {
                         .background(Color(red: 0.39, green: 0.56, blue: 0.89))
                         .foregroundColor(.white)
                         .cornerRadius(10)
+                        .padding(.bottom,8)
                 }
 
                 VStack(alignment: .leading, spacing: 10) {
@@ -70,23 +71,26 @@ struct DetailsScreen: View {
                         Button {
                             didTappedOrder()
                         } label: {
-                            Text("Place Order")
-                                .padding(4)
-                                .background(Color.blue)
+                            Text("Book A Trip")
+                                .frame(width: 150)
+                                .padding(8)
+                                .background(Color(red: 0.39, green: 0.56, blue: 0.89))
                                 .cornerRadius(10)
                                 .foregroundColor(.white)
                             
                         }
                         .padding(.top)
                         
+                        Spacer()
                         
                         Button {
                             didTappedFavourite()
                         } label: {
                             
                             Text(text)
-                                .padding(4)
-                                .background(Color.blue)
+                                .frame(width: 150)
+                                .padding(8)
+                                .background(Color(red: 0.39, green: 0.56, blue: 0.89))
                                 .cornerRadius(10)
                                 .foregroundColor(.white)
                             
@@ -95,23 +99,26 @@ struct DetailsScreen: View {
                     }
                     HStack {
                         Button {
-                            print("Cancelled")
                             showReviewSheet = true // Set the state variable to true to present the sheet
                             
                         } label: {
                             Text("Tap to Review")
-                                .padding(4)
-                                .background(Color.blue)
+                                .frame(width: 150)
+                                .padding(8)
+                                .background(Color(red: 0.39, green: 0.56, blue: 0.89))
                                 .cornerRadius(10)
                                 .foregroundColor(.white)
                         }
                         
+                        Spacer()
+
                         Button {
                             showReviews = true
                         } label: {
-                            Text("Check Reviews")
-                                .padding(4)
-                                .background(Color.blue)
+                            Text("View Reviews")
+                                .frame(width: 150)
+                                .padding(8)
+                                .background(Color(red: 0.39, green: 0.56, blue: 0.89))
                                 .cornerRadius(10)
                                 .foregroundColor(.white)
 
