@@ -1,10 +1,3 @@
-//
-//  OrderListingView.swift
-//  SideMenuView
-//
-//  Created by Invotyx Mac on 07/11/2023.
-//
-
 import SwiftUI
 
 
@@ -12,9 +5,10 @@ struct OrderListingView: View {
     
     @Binding var presentSideMenu: Bool
     @State var orders = [OrderData]()
+    @State private var showAlert = false
     
     var body: some View {
-        ScrollView {
+//        ScrollView {
             VStack{
                 HStack{
                     Button{
@@ -23,24 +17,65 @@ struct OrderListingView: View {
                         Image("menu")
                             .resizable()
                             .frame(width: 32, height: 32)
+                            .padding(.horizontal)
                     }
                     Spacer()
                 }
                 
-                Text("Order Listing View")
+                Text("My Itinerary")
                 
-                ForEach(orders, id: \.id) { item in
-                    OrderListingCellView(orderData: item)
+                List {
+                    ForEach(orders, id: \.id) { item in
+                        OrderListingCellView(orderData: item)
+                    }
+                    .onDelete(perform: delete)
                 }
-                Spacer()
+                .listStyle(PlainListStyle())
+                
+//                Spacer()
             }
             .onAppear {
                 FirebaseManager.shared.getAllOrders { orderData, error in
                     self.orders = orderData ?? []
                 }
             }
-        .padding(.horizontal, 24)
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Success"),
+                    message: Text("Payment refund has been completed and trip is cancelled"),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
+    }
+    private func delete(indexSet: IndexSet) {
+        guard let index = indexSet.first else { return }
+        
+        FirebaseManager.shared.deleteOrder(userID: AppUtility.shared.userId!,
+                                           orderId:  orders[index].id) { err in
+            if err == nil {
+                print("deleted")
+                let newBalance = (AppUtility.shared.totalBalance ?? 0) + orders[index].price
+                FirebaseManager.shared.updateBalance(newBalance: newBalance) { isSuccess, err in
+                    if isSuccess {
+                        
+                        AppUtility.shared.totalBalance = newBalance
+                        print("Payment Credited")
+                       
+                        FirebaseManager.shared.addNotification(userID: AppUtility.shared.userId!,
+                                                               notification: "Refund of $\(orders[index].price) is completed for trip \(orders[index].title), \(orders[index].location)"){ error in
+                            self.orders.remove(at: index)
+                            self.showAlert.toggle()
+                            if error == nil {
+                                print("Notification added")
+                            }
+                        }
+                    } else {
+                        print(err?.localizedDescription ?? "")
+                    }
+                }
+            }
         }
+        
     }
     
 }
@@ -50,7 +85,7 @@ struct OrderListingView: View {
 
 struct OrderListingCellView: View {
     
-    var orderData = OrderData(id: "", filter: "", location: "", rating: "", title: "")
+    var orderData = OrderData(id: "", filter: "", location: "", rating: "", title: "", price: 0, date: "")
     
     var body: some View {
         VStack {
@@ -67,9 +102,15 @@ struct OrderListingCellView: View {
                     .font(.system(size: 18,weight: .semibold))
             }
             HStack {
-                Text("Rating:")
+                Text("Amount Paid")
                 Spacer()
-                Text(orderData.rating)
+                Text("$\(orderData.price)")
+                    .font(.system(size: 18,weight: .semibold))
+            }
+            HStack {
+                Text("Date Scheduled")
+                Spacer()
+                Text(orderData.date)
                     .font(.system(size: 18,weight: .semibold))
             }
         }

@@ -1,21 +1,13 @@
-//
-//  FavoriteListingView.swift
-//  SideMenuView
-//
-//  Created by Invotyx Mac on 07/11/2023.
-//
-
 import SwiftUI
 
-
 struct FavoriteListingView: View {
-    
     @Binding var presentSideMenu: Bool
-    @State var imageData = [ImageData]()
-
+    @State private var imageData = [ImageData]()
+    @State private var selectedImageData: ImageData?
+    
     var body: some View {
-        ScrollView {
-            VStack{
+        NavigationStack {
+            VStack {
                 HStack{
                     Button{
                         presentSideMenu.toggle()
@@ -23,17 +15,25 @@ struct FavoriteListingView: View {
                         Image("menu")
                             .resizable()
                             .frame(width: 32, height: 32)
+                            .padding(16)
                     }
                     Spacer()
                 }
                 
-                Text("Favourites Listing View")
+                Text("My Favourites")
                 
-                ForEach(imageData, id: \.id) { item in
-                    let orderData = OrderData(id: item.id, filter: item.filter, location: item.location, rating: item.rating, title: item.title)
-                    OrderListingCellView(orderData: orderData)
+                List {
+                    ForEach(imageData, id: \.id) { item in
+                        
+                        NavigationLink {
+                            DetailsScreen(imageData: item)
+                        } label: {
+                            FavoriteListingCellView(place: item)
+                        }
+                    }
+                    .onDelete(perform: delete)
                 }
-                
+                .listStyle(PlainListStyle())
                 
                 Spacer()
             }
@@ -42,7 +42,61 @@ struct FavoriteListingView: View {
                     self.imageData = imagesData ?? []
                 }
             }
-            .padding(.horizontal, 24)
         }
+    }
+    
+    private func delete(indexSet: IndexSet) {
+        guard let index = indexSet.first else { return }
+        FirebaseManager.shared.deleteFavoriteByImageID(userID: AppUtility.shared.userId!, favoriteImageID: imageData[index].id) { err in
+            if err == nil {
+                print("Successfully Removed from List")
+            }
+        }
+        imageData.remove(at: index)
+    }
+}
+
+struct FavoriteListingCellView: View {
+    
+    var place = ImageData(id: "", imageURL: "", title: "", location: "", rating: "", filter: "", isFavourite: false, description: "", latitude: 0.00, longitude: 0.00, price: 0)
+    
+    var body: some View {
+        HStack {
+            AsyncImage(url: URL(string: place.imageURL)) { phase in
+                switch phase {
+                case .empty:
+                    // Placeholder image or view
+                    ProgressView()
+                case .success(let image):
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 180, height: 150)
+                case .failure:
+                    // Placeholder image or view
+                    Image(systemName: "photo")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 50, height: 50)
+                @unknown default:
+                    fatalError()
+                }
+            }
+            .frame(width: 180, height: 150) // Set the frame size for the wrapper view
+            .cornerRadius(8) // Apply corner radius to the wrapper view
+            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white, lineWidth: 2)) // Optional: Add a border
+            
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(place.title)
+                    .font(.headline)
+                Text(place.location)
+                    .font(.subheadline)
+            }
+            
+            
+            Spacer()
+        }
+        .cornerRadius(8)
     }
 }

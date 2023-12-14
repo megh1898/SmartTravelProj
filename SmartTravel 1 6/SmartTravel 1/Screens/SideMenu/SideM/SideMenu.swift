@@ -1,10 +1,3 @@
-//
-//  SideMenu.swift
-//  SideMenuView
-//
-//  Created by Invotyx Mac on 07/11/2023.
-//
-
 import SwiftUI
 
 struct SideMenu: View {
@@ -39,6 +32,7 @@ enum SideMenuRowType: Int, CaseIterable{
     case favorite
     case notification
     case order
+    case logout
     
     var title: String{
         switch self {
@@ -49,7 +43,9 @@ enum SideMenuRowType: Int, CaseIterable{
         case .notification:
             return "Notification"
         case .order:
-            return "Order"
+            return "Itinerary"
+        case .logout:
+            return "Logout"
         }
     }
     
@@ -63,6 +59,8 @@ enum SideMenuRowType: Int, CaseIterable{
             return "favorite"
         case .order:
             return "favorite"
+        case .logout:
+            return "logout"
         }
     }
 }

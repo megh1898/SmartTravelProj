@@ -1,10 +1,3 @@
-//
-//  SplashScreenView.swift
-//  SmartTravel 1
-//
-//  Created by MEGH SHAH on 2023-10-19.
-//
-
 import SwiftUI
 
 struct SplashScreenView: View {

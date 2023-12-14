@@ -1,13 +1,7 @@
-//
-//  MainScreen.swift
-//  SmartTravel
-//
-//  Created by Sam 77 on 2023-09-21.
-//
-
 import SwiftUI
 
 struct MainScreen: View {
+    @State var age = ""
     @Binding var isLoggedIn : Bool
     @StateObject private var authViewModel = AuthViewModel()
     var body: some View {
@@ -38,7 +32,7 @@ struct MainScreen: View {
                         )
                 }
                 
-                NavigationLink(destination: SignUpScreen( isLoggedIn: _isLoggedIn, authViewModel: authViewModel)) {
+                NavigationLink(destination: SignUpScreen( isLoggedIn: _isLoggedIn, age: $age, authViewModel: authViewModel)) {
                     Text("Sign up")
                         .font(Font.custom("Roboto", size: 14).weight(.bold))
                         .foregroundColor(.white)
@@ -59,4 +53,3 @@ struct MainScreen: View {
         }
     }
 }
-

@@ -2,40 +2,37 @@ import SwiftUI
 import Firebase
 
 struct ContentView: View {
-    
-    private let splashDuration: Double = 2.0
+    @State var presentSideMenu = false
+    private let splashDuration: Double = 0.1
     @State private var showSplashScreen = true // Use a flag to control the splash screen visibility
     @State private var isLoggedIn = false
     @ObservedObject var authViewModel: AuthViewModel
-    @State var imageData = ImageData(imageURL: "", title: "", location: "", rating: "", filter: "", isFavourite: false)
+    @State var imageData = ImageData(imageURL: "", title: "", location: "", rating: "", filter: "", isFavourite: false, description: "", latitude: 0.0, longitude: 0.0, price: 0)
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 if showSplashScreen {
-                    SplashScreenView(isShowing: $showSplashScreen) // Show the SplashScreenView
+                    SplashScreenView(isShowing: $showSplashScreen)
                 } else if isLoggedIn {
-                    MainScreen(isLoggedIn: $isLoggedIn)
+//                    MainScreen(isLoggedIn: $isLoggedIn)
+                    HomeScreen()
                 } else {
                     SignInScreen(isLoggedIn: $isLoggedIn, authViewModel: authViewModel)
                 }
-//                DetailsScreen(imageData: imageData)
-//                GiveFeedbackAndReview(rating: .constant(0.5))
             }
             .onAppear {
                 
                 FirebaseManager.shared.fetchImageData { imageData, error in
-                    self.imageData = imageData?.first ?? ImageData(imageURL: "", title: "", location: "", rating: "", filter: "", isFavourite: false)
+                    self.imageData = imageData?.first ?? ImageData(imageURL: "", title: "", location: "", rating: "", filter: "", isFavourite: false, description: "", latitude: 0.0, longitude: 0.0, price: 0)
                 }
 
                 Timer.scheduledTimer(withTimeInterval: splashDuration, repeats: false) { _ in
                     withAnimation {
-                        self.showSplashScreen = false // Hide the splash screen and show login screen
+                        self.showSplashScreen = false
                     }
                 }
-
             }
         }
     }
 }
-

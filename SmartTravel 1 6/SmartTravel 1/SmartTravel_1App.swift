@@ -1,10 +1,3 @@
-//
-//  SmartTravel_1App.swift
-//  SmartTravel 1
-//
-//  Created by MEGH SHAH on 2023-10-05.
-//
-
 import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
@@ -21,7 +14,6 @@ struct SmartTravel_1App: App {
 
     var body: some Scene {
         WindowGroup {
-            // Pass the authViewModel to your ContentView
             ContentView(authViewModel: authViewModel)
         }
     }

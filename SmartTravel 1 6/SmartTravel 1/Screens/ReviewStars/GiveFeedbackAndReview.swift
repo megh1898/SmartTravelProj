@@ -1,10 +1,3 @@
-//
-//  GiveFeedbackAndReview.swift
-//  SmartTravel 1
-//
-//  Created by Invotyx Mac on 07/11/2023.
-//
-
 import SwiftUI
 import StarRating
 
@@ -14,34 +7,40 @@ struct GiveFeedbackAndReview: View {
     @State private var reviewText = ""
     @State private var isReviewSubmitted = false
     @State var customConfig = StarRatingConfiguration(numberOfStars: 5, minRating: 1)
-    @State var rating: Double
+    @State var rating: Double = 0.5
     @Binding var imageData: ImageData
     @State private var showAlert = false
     @State var alertMessage = ""
     @Environment(\.presentationMode) var presentationMode
-
-
+    var isEditReview = false
+    var reviewData = ReviewData(id: "", location: "", rating: "", description: "", title: "", reviewerId: "", reviewId: "", username: "", date: Date())
+    
     var body: some View {
         NavigationView {
             ZStack {
                 VStack {
-                    Text("Write a Review")
+                    let title = isEditReview ? "Edit your review" : "Write your review"
+                    Text(title)
                         .font(.title3)
                         .padding()
-
+                    
                     TextEditor(text: $reviewText)
                         .frame(maxHeight: 100)
                         .padding()
                         .border(Color.gray, width: 1)
                         .cornerRadius(5)
+                        
 
                     // set the initialRating
                     // add a callback to do something with the new rating
-                    StarRating(initialRating: 0.5, onRatingChanged: {
+                    StarRating(initialRating: rating, onRatingChanged: {
                         print($0)
                             rating = $0 // Update the @Binding variable with the new rating
 
                     }).frame(width: 300, height: 100)
+                        .onAppear {
+                            rating = Double(reviewData.rating) ?? 0.0
+                        }
 
                     
                     Button(action: {
@@ -59,7 +58,12 @@ struct GiveFeedbackAndReview: View {
 
                 }
                 .padding()
-
+                .onAppear {
+                    if isEditReview {
+                        reviewText = reviewData.description
+                        
+                    }
+                }
                 .alert(isPresented: $showAlert) {
                             Alert(
                                 title: Text("Message"),
@@ -74,6 +78,35 @@ struct GiveFeedbackAndReview: View {
     func submitReview() {
         // Perform the review submission logic here
         // For demonstration purposes, we'll just set a flag to indicate submission
+        if isEditReview {
+            editReview()
+        } else {
+            addNewReview()
+        }
+        
+    }
+    
+    func editReview() {
+        
+        if validate() {
+            FirebaseManager.shared.updateReviewInFirestore(documentId: reviewData.reviewId,
+                                                           description: reviewText, 
+                                                           rating: String(rating),
+                                                           location: imageData.location,
+                                                           title: imageData.title) { err in
+                if err == nil {
+                    reviewText = ""
+                    alertMessage = "Review Updated Successfully"
+                    showAlert = true
+                }
+            }
+        } else {
+            alertMessage = "Please Enter Review"
+            showAlert = true
+        }
+    }
+    
+    func addNewReview() {
         isReviewSubmitted = true
         if validate() {
             FirebaseManager.shared.addReviewToFirestore(description: reviewText, rating: String(rating), location: imageData.location, title: imageData.title) { error in
@@ -90,7 +123,7 @@ struct GiveFeedbackAndReview: View {
             }
         } else {
             alertMessage = "Please Enter Review"
-            showAlert    = true
+            showAlert = true
         }
     }
     
@@ -101,9 +134,4 @@ struct GiveFeedbackAndReview: View {
             return true
         }
     }
-}
-
-
-#Preview {
-    GiveFeedbackAndReview(rating: 0.5, imageData: .constant(ImageData(imageURL: "", title: "", location: "", rating: "", filter: "", isFavourite: false)))
 }

@@ -1,10 +1,3 @@
-//
-//  NotificationListingView.swift
-//  SideMenuView
-//
-//  Created by Invotyx Mac on 07/11/2023.
-//
-
 import SwiftUI
 
 struct NotificationListingView: View {
@@ -34,8 +27,8 @@ struct NotificationListingView: View {
                 Spacer()
             }
             .onAppear {
-                FirebaseManager.shared.fetchAllNotifications { notificationsData, error in
-                    notifications = notificationsData ?? []
+                FirebaseManager.shared.getNotifications(userID: AppUtility.shared.userId!) { notifications, error in
+                    self.notifications = notifications ?? []
                 }
             }
         .padding(.horizontal, 24)

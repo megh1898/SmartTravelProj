@@ -1,58 +1,3 @@
-////
-////  LocationManager.swift
-////  SmartTravel 1
-////
-////  Created by Invotyx Mac on 06/11/2023.
-////
-//
-//import Foundation
-//import CoreLocation
-//import Combine
-//
-//class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
-//
-//    private let locationManager = CLLocationManager()
-//    @Published var locationStatus: CLAuthorizationStatus?
-//    @Published var lastLocation: CLLocation?
-//
-//    override init() {
-//        super.init()
-//        locationManager.delegate = self
-//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//        locationManager.requestWhenInUseAuthorization()
-//        locationManager.startUpdatingLocation()
-//    }
-//
-//   
-//    
-//    var statusString: String {
-//        guard let status = locationStatus else {
-//            return "unknown"
-//        }
-//        
-//        switch status {
-//        case .notDetermined: return "notDetermined"
-//        case .authorizedWhenInUse: return "authorizedWhenInUse"
-//        case .authorizedAlways: return "authorizedAlways"
-//        case .restricted: return "restricted"
-//        case .denied: return "denied"
-//        default: return "unknown"
-//        }
-//    }
-//
-//    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-//        locationStatus = status
-//        print(#function, statusString)
-//    }
-//    
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        guard let location = locations.last else { return }
-//        lastLocation = location
-//        print(#function, location)
-//    }
-//}
-
-
 import Foundation
 import CoreLocation
 
@@ -61,10 +6,12 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     @Published var city: String = "Unknown"
     @Published var country: String = "Unknown"
+    @Published var location: CLLocation? = nil
     
     override init() {
         super.init()
         locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
     }
@@ -81,8 +28,28 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
             
             if let placemark = placemarks?.first {
-                self.city = placemark.locality ?? "Unknown"
-                self.country = placemark.country ?? "Unknown"
+                
+                if let city = placemark.name {
+                    self.city = city
+                    AppUtility.shared.city = city
+                }
+                
+                if let country = placemark.country {
+                    self.country = country
+                    AppUtility.shared.country = country
+                }
+                
+                self.location = placemark.location
+
+                if let lat = placemark.location?.coordinate.latitude {
+                    AppUtility.shared.latitude = "\(lat)"
+                }
+                
+                if let long = placemark.location?.coordinate.longitude {
+                    AppUtility.shared.longitude = "\(long)"
+                }
+
+                self.locationManager.stopUpdatingLocation()
             }
         }
     }

@@ -1,10 +1,3 @@
-//
-//  HomeView.swift
-//  SideMenuView
-//
-//  Created by Invotyx Mac on 07/11/2023.
-//
-
 import SwiftUI
 
 
@@ -29,7 +22,7 @@ struct HomeVieww: View {
             Spacer()
             HomeScreen()
         }
-        .padding(.horizontal, 24)
+        .padding(.horizontal, 15)
     }
     
 }

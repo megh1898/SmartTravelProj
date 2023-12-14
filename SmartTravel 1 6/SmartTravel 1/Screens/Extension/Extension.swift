@@ -1,10 +1,3 @@
-//
-//  Extension.swift
-//  SmartTravel 1
-//
-//  Created by Invotyx Mac on 07/11/2023.
-//
-
 import Foundation
 import SwiftUI
 
